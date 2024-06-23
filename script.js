@@ -1,51 +1,111 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    const mainImage = document.getElementById('mainImageSrc');
-    const productNarration = document.getElementById('productNarration');
-    const addToCartButton = document.getElementById('addToCart');
-    const cart = document.getElementById('cart');
+document.addEventListener('DOMContentLoaded', () => {
+        const mainImageDiv = document.getElementById('mainImage');
+        const mainImage = mainImageDiv.querySelector('img');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const productNarration = document.getElementById('productNarration');
+        const quantityInput = document.getElementById('quantity');
+        const increaseQtyBtn = document.getElementById('increaseQty');
+        const decreaseQtyBtn = document.getElementById('decreaseQty');
+        const addToCartBtn = document.getElementById('addToCart');
+        const cartItemsDiv = document.getElementById('cartItems');
+        const totalCostSpan = document.getElementById('totalCost');
+        const checkoutBtn = document.getElementById('checkout');
+        const paymentDetailsDiv = document.getElementById('paymentDetails');
+        const submitPaymentBtn = document.getElementById('submitPayment');
+        const customerEmailInput = document.getElementById('customerEmail');
+        const uploadReceiptInput = document.getElementById('uploadReceipt');
 
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function() {
-            const imgSrc = thumbnail.querySelector('img').src;
-            const narration = thumbnail.getAttribute('data-narration');
-            const price = thumbnail.getAttribute('data-price');
+        let cartItems = [];
 
-            mainImage.src = imgSrc;
+        // Function to update main image and narration
+        function updateMainImage(src, price, narration) {
+            mainImage.src = src;
             mainImage.setAttribute('data-price', price);
             productNarration.textContent = narration;
+        }
+
+        // Function to render cart items
+        function renderCartItems() {
+            cartItemsDiv.innerHTML = '';
+            let totalCost = 0;
+            cartItems.forEach((item, index) => {
+                totalCost += item.price * item.quantity;
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <span>${item.narration}</span>
+                    <span>₦${item.price}</span>
+                    <span>Qty: ${item.quantity}</span>
+                    <span class="remove-item" data-index="${index}">Remove</span>
+                `;
+                cartItemsDiv.appendChild(cartItemDiv);
+            });
+            totalCostSpan.textContent = totalCost;
+        }
+
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                const thumbnailSrc = thumbnail.getAttribute('data-src');
+                const thumbnailPrice = thumbnail.getAttribute('data-price');
+                const narration = thumbnail.getAttribute('data-narration');
+
+                // Update main image and product details
+                updateMainImage(thumbnailSrc, thumbnailPrice, narration);
+            });
+        });
+
+        increaseQtyBtn.addEventListener('click', () => {
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        });
+
+        decreaseQtyBtn.addEventListener('click', () => {
+            if (quantityInput.value > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        });
+
+        addToCartBtn.addEventListener('click', () => {
+            const item = {
+                src: mainImage.src,
+                price: parseInt(mainImage.getAttribute('data-price')),
+                quantity: parseInt(quantityInput.value),
+                narration: productNarration.textContent
+            };
+            cartItems.push(item);
+            alert('Item added to cart');
+            renderCartItems();
+        });
+
+        cartItemsDiv.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-item')) {
+                const index = event.target.getAttribute('data-index');
+                cartItems.splice(index, 1);
+                renderCartItems();
+            }
+        });
+
+        checkoutBtn.addEventListener('click', () => {
+            paymentDetailsDiv.style.display = 'block';
+        });
+
+        submitPaymentBtn.addEventListener('click', () => {
+            const customerEmail = customerEmailInput.value;
+            if (!customerEmail) {
+                alert('Please enter your email');
+                return;
+            }
+
+            let totalCost = 0;
+            let emailBody = "Items in cart:\n\n";
+            cartItems.forEach(item => {
+                totalCost += item.price * item.quantity;
+                emailBody += `Product: ${item.narration}\nPrice: ₦${item.price}\nQuantity: ${item.quantity}\nImage: ${item.src}\n\n`;
+            });
+            emailBody += `Total Cost: ₦${totalCost}`;
+
+            const mailtoLink = `mailto:mondaykingsley80@gmail.com,${customerEmail}?subject=Cart Items&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
         });
     });
 
-    document.getElementById('increaseQty').addEventListener('click', function() {
-        const quantityInput = document.getElementById('quantity');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
-    });
 
-    document.getElementById('decreaseQty').addEventListener('click', function() {
-        const quantityInput = document.getElementById('quantity');
-        if (quantityInput.value > 1) {
-            quantityInput.value = parseInt(quantityInput.value) - 1;
-        }
-    });
-
-    addToCartButton.addEventListener('click', function() {
-        const quantity = document.getElementById('quantity').value;
-        const price = mainImage.getAttribute('data-price');
-        const narration = productNarration.textContent;
-        const imgSrc = mainImage.src;
-
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-
-        const cartItemImg = document.createElement('img');
-        cartItemImg.src = imgSrc;
-        cartItem.appendChild(cartItemImg);
-
-        const cartItemDescription = document.createElement('p');
-        cartItemDescription.textContent = `${narration} - Quantity: ${quantity} - Price: ₦${price * quantity}`;
-        cartItem.appendChild(cartItemDescription);
-
-        cart.appendChild(cartItem);
-    });
-});
