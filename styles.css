@@ -5,6 +5,25 @@ body {
             height: 100vh;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .view {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #f0f0f0;
+            overflow: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .active {
+            display: flex;
         }
         .gallery {
             display: flex;
@@ -12,8 +31,8 @@ body {
             align-items: flex-start;
         }
         .main-image {
-            width: 400px;
-            height: 400px;
+            width: 200px;
+            height: 200px;
             margin-right: 20px;
             border: 2px solid #ccc;
             position: relative;
@@ -89,10 +108,16 @@ body {
             cursor: pointer;
         }
         .payment-details {
-            display: none;
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 20px;
             background-color: #fff;
         }
-
+        .back-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
