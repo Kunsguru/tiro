@@ -36,7 +36,23 @@
 </div>
 
 <h2>Shopping Cart</h2>
-<div class="cart" id="cart"></div>
+<div class="cart" id="cart">
+    <h3>Shopping Cart</h3>
+    <div id="cartItems"></div>
+    <p>Total Cost: ₦<span id="totalCost">0</span></p>
+    <button class="checkout" id="checkout">Checkout</button>
+</div>
+
+    <div class="payment-details" id="paymentDetails">
+    <h3>Payment Details</h3>
+    <p>Account Name: Monday Kingsley Ugochukwu</p>
+    <p>Account Number: 7069728306</p>
+    <p>Account Bank: Opay</p>
+    <input type="email" id="customerEmail" placeholder="Enter your email" required>
+    <input type="file" id="uploadReceipt" accept="image/*">
+    <button class="checkout" id="submitPayment">Submit</button>
+</div>
+
 
 <script src="script.js"></script>
 </body>
