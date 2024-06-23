@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+        const mainView = document.getElementById('mainView');
+        const cartView = document.getElementById('cartView');
+        const paymentView = document.getElementById('paymentView');
+
         const mainImageDiv = document.getElementById('mainImage');
         const mainImage = mainImageDiv.querySelector('img');
         const thumbnails = document.querySelectorAll('.thumbnail');
@@ -10,21 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const cartItemsDiv = document.getElementById('cartItems');
         const totalCostSpan = document.getElementById('totalCost');
         const checkoutBtn = document.getElementById('checkout');
-        const paymentDetailsDiv = document.getElementById('paymentDetails');
         const submitPaymentBtn = document.getElementById('submitPayment');
         const customerEmailInput = document.getElementById('customerEmail');
         const uploadReceiptInput = document.getElementById('uploadReceipt');
+        const backToMainBtn = document.getElementById('backToMain');
+        const backToCartBtn = document.getElementById('backToCart');
 
         let cartItems = [];
 
-        // Function to update main image and narration
         function updateMainImage(src, price, narration) {
             mainImage.src = src;
             mainImage.setAttribute('data-price', price);
             productNarration.textContent = narration;
         }
 
-        // Function to render cart items
         function renderCartItems() {
             cartItemsDiv.innerHTML = '';
             let totalCost = 0;
@@ -48,8 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const thumbnailSrc = thumbnail.getAttribute('data-src');
                 const thumbnailPrice = thumbnail.getAttribute('data-price');
                 const narration = thumbnail.getAttribute('data-narration');
-
-                // Update main image and product details
                 updateMainImage(thumbnailSrc, thumbnailPrice, narration);
             });
         });
@@ -74,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItems.push(item);
             alert('Item added to cart');
             renderCartItems();
+            mainView.classList.remove('active');
+            cartView.classList.add('active');
         });
 
         cartItemsDiv.addEventListener('click', (event) => {
@@ -85,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         checkoutBtn.addEventListener('click', () => {
-            paymentDetailsDiv.style.display = 'block';
+            cartView.classList.remove('active');
+            paymentView.classList.add('active');
         });
 
         submitPaymentBtn.addEventListener('click', () => {
@@ -106,6 +110,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const mailtoLink = `mailto:mondaykingsley80@gmail.com,${customerEmail}?subject=Cart Items&body=${encodeURIComponent(emailBody)}`;
             window.location.href = mailtoLink;
         });
+
+        backToMainBtn.addEventListener('click', () => {
+            cartView.classList.remove('active');
+            mainView.classList.add('active');
+        });
+
+        backToCartBtn.addEventListener('click', () => {
+            paymentView.classList.remove('active');
+            cartView.classList.add('active');
+        });
+
+        mainView.classList.add('active');
     });
+    
+    
+    
+
+
+
+
+
 
 
