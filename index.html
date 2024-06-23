@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="gallery">
+    <div class="main-image" id="mainImage">
+        <img src="/Screenshot_20240616-134720.jpg" alt="Main Image" data-price="5000" id="mainImageSrc">
+    </div>
+    <div class="thumbnails">
+        <div class="thumbnail" data-src="image1.jpg" data-narration="Product X description" data-price="5000">
+            <img src="/Screenshot_20240616-103644.jpg" alt="Thumbnail 1">
+        </div>
+        <div class="thumbnail" data-src="image2.jpg" data-narration="Product Y description" data-price="7000">
+            <img src="/Screenshot_20240617-183854.jpg" alt="Thumbnail 2">
+        </div>
+        <div class="thumbnail" data-src="image3.jpg" data-narration="Product Z description" data-price="6000">
+            <img src="/Screenshot_20240617-183734.jpg" alt="Thumbnail 3">
+        </div>
+    </div>
+</div>
+
+<div class="product-details">
+    <p id="productNarration">Product X description</p>
+    <div class="quantity-control">
+        <button id="decreaseQty">-</button>
+        <input type="number" id="quantity" value="1" min="1">
+        <button id="increaseQty">+</button>
+    </div>
+    <button class="add-to-cart" id="addToCart">Add to Cart</button>
+</div>
+
+<h2>Shopping Cart</h2>
+<div class="cart" id="cart"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
