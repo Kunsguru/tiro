@@ -7,50 +7,72 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="gallery">
-    <div class="main-image" id="mainImage">
-        <img src="/1707866590368.jpg" alt="Main Image" data-price="5000" id="mainImageSrc">
+<div class="view active" id="mainView">
+    <div class="gallery">
+        <div class="main-image" id="mainImage">
+            <img src="image1.jpg" alt="Main Image" data-price="5000">
+        </div>
+        <div class="thumbnails">
+            <div class="thumbnail" data-src="image1.jpg" data-narration="Product X description" data-price="5000">
+                <img src="image1.jpg" alt="Thumbnail 1">
+            </div>
+            <div class="thumbnail" data-src="image2.jpg" data-narration="Product Y description" data-price="7000">
+                <img src="image2.jpg" alt="Thumbnail 2">
+            </div>
+            <div class="thumbnail" data-src="image3.jpg" data-narration="Product Z description" data-price="6000">
+                <img src="image3.jpg" alt="Thumbnail 3">
+            </div>
+        </div>
     </div>
-    <div class="thumbnails">
-        <div class="thumbnail" data-src="image1.jpg" data-narration="Product X description" data-price="5000">
-            <img src="/20240224_210819.png" alt="Thumbnail 1">
+
+    <div class="product-details">
+        <p id="productNarration">Product X description</p>
+        <div class="quantity-control">
+            <button id="decreaseQty">-</button>
+            <input type="number" id="quantity" value="1" min="1">
+            <button id="increaseQty">+</button>
         </div>
-        <div class="thumbnail" data-src="image2.jpg" data-narration="Product Y description" data-price="7000">
-            <img src="/Screenshot_20240531-203018~2.jpg" alt="Thumbnail 2">
-        </div>
-        <div class="thumbnail" data-src="image3.jpg" data-narration="Product Z description" data-price="6000">
-            <img src="/Screenshot_20240623-142910.jpg" alt="Thumbnail 3">
-        </div>
+        <button class="add-to-cart" id="addToCart">Add to Cart</button>
     </div>
 </div>
 
-<div class="product-details">
-    <p id="productNarration">Product X description</p>
-    <div class="quantity-control">
-        <button id="decreaseQty">-</button>
-        <input type="number" id="quantity" value="1" min="1">
-        <button id="increaseQty">+</button>
+<div class="view" id="cartView">
+    <div class="cart">
+        <h3>Shopping Cart</h3>
+        <div id="cartItems"></div>
+        <p>Total Cost: ₦<span id="totalCost">0</span></p>
+        <button class="checkout" id="checkout">Checkout</button>
+        <button class="back-button" id="backToMain">Back</button>
     </div>
-    <button class="add-to-cart" id="addToCart">Add to Cart</button>
 </div>
+<!----Views Management: Added view class to handle different views (main, cart, and payment). Only one view is displayed at a time.
+    
+Initial View: The main view is displayed initially.
 
-<h2>Shopping Cart</h2>
-<div class="cart" id="cart">
-    <h3>Shopping Cart</h3>
-    <div id="cartItems"></div>
-    <p>Total Cost: ₦<span id="totalCost">0</span></p>
-    <button class="checkout" id="checkout">Checkout</button>
-</div>
+Navigation: Added buttons to navigate between views. The cart view overlays the main view, and the payment view overlays the cart view.
 
-    <div class="payment-details" id="paymentDetails">
-    <h3>Payment Details</h3>
-    <p>Account Name: Monday Kingsley Ugochukwu</p>
-    <p>Account Number: 7069728306</p>
-    <p>Account Bank: Opay</p>
-    <input type="email" id="customerEmail" placeholder="Enter your email" required>
-    <input type="file" id="uploadReceipt" accept="image/*">
-    <button class="checkout" id="submitPayment">Submit</button>
+Back Buttons: Added back buttons in the cart and payment views to return to the previous views.
+
+Dynamic Updates: The main image and product details update based on the selected thumbnail. The cart updates with added items and calculates the total cost dynamically.--->
+
+
+
+
+
+
+
+
+<div class="view" id="paymentView">
+    <div class="payment-details">
+        <h3>Payment Details</h3>
+        <p>Account Name: Monday Kingsley Ugochukwu</p>
+        <p>Account Number: 7069728306</p>
+        <p>Account Bank: Opay</p>
+        <input type="email" id="customerEmail" placeholder="Enter your email" required>
+        <input type="file" id="uploadReceipt" accept="image/*">
+        <button class="checkout" id="submitPayment">Submit</button>
+        <button class="back-button" id="backToCart">Back</button>
+    </div>
 </div>
 
 
